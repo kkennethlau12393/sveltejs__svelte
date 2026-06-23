@@ -472,9 +472,7 @@ export function update_effect(effect) {
 	active_effect = effect;
 	is_updating_effect = (flags & (BRANCH_EFFECT | ROOT_EFFECT)) === 0; // Branch/root effects are not reactive contexts
 
-	var pop_renderer = custom_renderers_flag
-		? push_renderer(effect.r, effect.pr, effect.pr)
-		: undefined;
+	var pop_renderer = custom_renderers_flag ? push_renderer(effect.r, effect.pr) : undefined;
 
 	if (DEV) {
 		var previous_component_fn = dev_current_component_function;

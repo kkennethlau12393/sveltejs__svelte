@@ -24,7 +24,6 @@ import {
 	push_renderer,
 	current_renderer,
 	parent_renderer,
-	parent_renderer,
 	set_parent_renderer
 } from '../../custom-renderer/state.js';
 import { custom_renderers_flag } from '../../../flags/index.js';
@@ -122,7 +121,6 @@ export class BranchManager {
 				set_parent_renderer(this.#parent_renderer);
 			}
 		}
-		this.#parent_renderer = parent_renderer;
 	}
 
 	/**
@@ -133,7 +131,7 @@ export class BranchManager {
 		if (!this.#batches.has(batch)) return;
 
 		var pop_renderer = custom_renderers_flag
-			? push_renderer(this.#renderer, this.#parent_renderer, this.#parent_renderer)
+			? push_renderer(this.#renderer, this.#parent_renderer)
 			: undefined;
 
 		var key = /** @type {Key} */ (this.#batches.get(batch));
