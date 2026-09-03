@@ -78,11 +78,8 @@ export function create_event(event_name, dom, handler, options = {}) {
 		event_name.startsWith('touch') ||
 		event_name === 'wheel'
 	) {
-		target_handler.__removed = false;
 		queue_micro_task(() => {
-			if (!target_handler.__removed) {
-				dom.addEventListener(event_name, target_handler, options);
-			}
+			dom.addEventListener(event_name, target_handler, options);
 		});
 	} else {
 		dom.addEventListener(event_name, target_handler, options);
@@ -105,7 +102,6 @@ export function on(element, type, handler, options = {}) {
 	var target_handler = create_event(type, element, handler, options);
 
 	return () => {
-		target_handler.__removed = true;
 		element.removeEventListener(type, target_handler, options);
 	};
 }
@@ -132,7 +128,6 @@ export function event(event_name, dom, handler, capture, passive) {
 		dom instanceof HTMLMediaElement
 	) {
 		teardown(() => {
-			target_handler.__removed = true;
 			dom.removeEventListener(event_name, target_handler, options);
 		});
 	}
