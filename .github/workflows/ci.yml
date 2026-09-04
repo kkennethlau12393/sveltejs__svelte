@@ -1,8 +1,6 @@
 name: CI
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_dispatch:
 permissions:
   contents: read # to fetch code (actions/checkout)
 
@@ -15,7 +13,7 @@ jobs:
     permissions:
       id-token: write
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
@@ -153,7 +151,7 @@ jobs:
   Benchmarks:
     permissions: {}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8

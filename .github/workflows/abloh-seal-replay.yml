@@ -1,0 +1,27 @@
+name: abloh seal replay
+on:
+  push:
+    branches: [abloh-seal-replay]
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm playwright install chromium
+      - run: pnpm test
+      - name: replay abloh
+        run: bash .github/abloh-replay/replay.sh 43c344c3ab54a1f31c6a14645a840aa48eb2c6ca
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seal-replay-svelte
+          path: ${{ runner.temp }}/abloh-replay
